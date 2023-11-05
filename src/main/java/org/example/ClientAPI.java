@@ -32,7 +32,7 @@ public class ClientAPI extends Thread{
     // JDBC URL
     String writeEndpoint = "database-1.cxbykd0hqw1f.us-west-2.rds.amazonaws.com";
 
-    String[] temp = {"mydbinstance.cxbykd0hqw1f.us-west-2.rds.amazonaws.com"};
+    String[] temp = {"mydbinstance.cxbykd0hqw1f.us-west-2.rds.amazonaws.com","mydatabase.cxbykd0hqw1f.us-west-2.rds.amazonaws.com"};
     List<String> readEndpoints = Arrays.asList(temp);
 
     DatabaseConnectionFactory databaseConnectionFactory;
@@ -61,7 +61,7 @@ public class ClientAPI extends Thread{
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
             conn.close();
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java6.csv", true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv", true));
 //            HttpGet httpget = new HttpGet(IPAddr);
 //            try (CloseableHttpResponse response = httpclient.execute(httpget)) {
 //                HttpEntity entity = response.getEntity();
@@ -123,7 +123,7 @@ public class ClientAPI extends Thread{
             conn.close();
             long end = System.currentTimeMillis();
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java6.csv", true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv", true));
             bufferedWriter.append(String.valueOf(start)).append(" Post ").append(String.valueOf(end - start)).append(" ms status:200\n");
             bufferedWriter.close();
             map.get("success").incrementAndGet();

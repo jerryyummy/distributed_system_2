@@ -31,8 +31,8 @@ public class DatabaseConnectionFactory {
         dataSource.setUsername(JDBC_USER);
         dataSource.setPassword(JDBC_PASSWORD);
         dataSource.setInitialSize(5);
-        dataSource.setMaxTotal(10);
-        dataSource.setMaxIdle(5);
+        dataSource.setMaxTotal(100);
+        dataSource.setMaxIdle(50);
         dataSource.setMinIdle(2);
         dataSource.setMaxWaitMillis(100);
         this.writeDataSource = dataSource;
@@ -43,8 +43,8 @@ public class DatabaseConnectionFactory {
             readConfig.setUsername(JDBC_USER);
             readConfig.setPassword(JDBC_PASSWORD);
             readConfig.setInitialSize(5);
-            readConfig.setMaxTotal(10);
-            readConfig.setMaxIdle(5);
+            readConfig.setMaxTotal(100);
+            readConfig.setMaxIdle(50);
             readConfig.setMinIdle(2);
             readConfig.setMaxWaitMillis(100);
             this.readDataSources.add(readConfig);

@@ -33,8 +33,6 @@ public class Main {
     }
     public static void main(String[] args) throws IOException {
         Main main = new Main();
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java4.csv");
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java5.csv");
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java6.csv");
+        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv");
     }
 }

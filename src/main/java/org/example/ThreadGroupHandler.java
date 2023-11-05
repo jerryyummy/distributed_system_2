@@ -21,7 +21,7 @@ public class ThreadGroupHandler {
     }
 
     public void request() throws Exception {
-        String fileName = "/Users/youyun/Documents/java project/client2/src/main/resources/result/java4.csv";
+        String fileName = "/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv";
         ConcurrentHashMap<String, AtomicInteger> map = new ConcurrentHashMap<>();
         map.put("success",new AtomicInteger(0));
         map.put("fail",new AtomicInteger(0));
