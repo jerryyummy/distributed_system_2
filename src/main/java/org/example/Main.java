@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CountedCompleter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,23 +17,44 @@ import static java.lang.Thread.sleep;
 public class Main {
     public void handleData(String fileName) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-        List<Long> list = new ArrayList<>();
-        Long res = 0L;
+        List<Long> postlist = new ArrayList<>();
+        List<Long> getlist = new ArrayList<>();
+        Long pres = 0L;
+        Long gres = 0L;
         String temp = "";
         while ((temp=bufferedReader.readLine())!=null){
-            Long responseTime = Long.valueOf(temp.split(" ")[2]);
-            list.add(responseTime);
-            res+=responseTime;
+            if (Objects.equals(temp.split(" ")[1], "Get")){
+                Long responseTime = Long.valueOf(temp.split(" ")[2]);
+                getlist.add(responseTime);
+                gres+=responseTime;
+            }else{
+                Long responseTime = Long.valueOf(temp.split(" ")[2]);
+                postlist.add(responseTime);
+                pres+=responseTime;
+            }
+
         }
-        Collections.sort(list);
-        System.out.println("mean response time: "+(res/list.size()));
-        System.out.println("median response time: "+list.get(list.size()/2));
-        System.out.println("99% response time: "+list.get(list.size()/100));
-        System.out.println("min response time: "+list.get(0));
-        System.out.println("max response time: "+list.get(list.size()-1));
+        Collections.sort(getlist);
+        Collections.sort(postlist);
+        System.out.println("for post:");
+        System.out.println("mean response time: "+(pres/postlist.size()));
+        System.out.println("median response time: "+postlist.get(postlist.size()/2));
+        System.out.println("99% response time: "+postlist.get(postlist.size()/100));
+        System.out.println("min response time: "+postlist.get(0));
+        System.out.println("max response time: "+postlist.get(postlist.size()-1));
+        System.out.println("succeed request:"+postlist.size());
+        System.out.println("for get:");
+        System.out.println("mean response time: "+(gres/getlist.size()));
+        System.out.println("median response time: "+getlist.get(getlist.size()/2));
+        System.out.println("99% response time: "+getlist.get(getlist.size()/100));
+        System.out.println("min response time: "+getlist.get(0));
+        System.out.println("max response time: "+getlist.get(getlist.size()-1));
+        System.out.println("succeed request:"+getlist.size());
     }
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv");
+//        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java5.csv");
+//        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java6.csv");
     }
 }
