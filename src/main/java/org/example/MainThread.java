@@ -42,7 +42,7 @@ public class MainThread extends Thread{
 
 
         try {
-            threadGroupSizeLatch.await(200000, TimeUnit.MILLISECONDS);    // 等待threadGroupSize个线程(10)跑完，到这里
+            threadGroupSizeLatch.await();    // 等待threadGroupSize个线程(10)跑完，到这里
             long groupEndTime = System.currentTimeMillis();
 //            out.write("group" + id + ": " + (groupEndTime - groupStartTime) + " ms\n");   // 写每个线程组时间
         } catch (Exception e) {

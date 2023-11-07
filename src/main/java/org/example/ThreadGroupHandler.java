@@ -21,13 +21,14 @@ public class ThreadGroupHandler {
     }
 
     public void request() throws Exception {
-        String fileName = "/Users/youyun/Documents/java project/client2/src/main/resources/result/java7.csv";
+        String fileName = "/Users/youyun/Documents/java project/client2/src/main/resources/result/java5.csv";
         ConcurrentHashMap<String, AtomicInteger> map = new ConcurrentHashMap<>();
         map.put("success",new AtomicInteger(0));
         map.put("fail",new AtomicInteger(0));
         long totalRequests = 0;
         CountDownLatch threadGroupLatch = new CountDownLatch(numThreadGroups);  // 线程组总数 10
         BufferedWriter out = new BufferedWriter(new FileWriter(fileName, true));
+        out.close();
         long startTime = System.currentTimeMillis();     // 线程组运行前时间
 
         for (int i = 0; i <numThreadGroups; i++) {
@@ -35,7 +36,7 @@ public class ThreadGroupHandler {
             Thread.sleep(delaySeconds * 1000L);
             totalRequests += 2000;
         }
-        boolean finish = threadGroupLatch.await(200000, TimeUnit.MILLISECONDS);
+        threadGroupLatch.await();
         System.out.println("threadGroup all Done");
         long endTime = System.currentTimeMillis();       //  线程组运行完时间
         System.out.println("thread group run all time: " + (endTime - startTime) + " ms");
@@ -45,7 +46,7 @@ public class ThreadGroupHandler {
     }
 
     public static void main(String[] args) throws Exception {
-        ThreadGroupHandler threadGroupHandler = new ThreadGroupHandler(10, 30, 2, "http://localhost:8081/assignment_war_exploded/AlbumStore/albums");
+        ThreadGroupHandler threadGroupHandler = new ThreadGroupHandler(10, 20, 2, "http://alb-1248427116.us-west-2.elb.amazonaws.com/assignment2_war/AlbumStore/albums");
         threadGroupHandler.request();
     }
 }
