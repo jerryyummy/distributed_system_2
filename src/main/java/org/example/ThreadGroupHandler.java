@@ -34,19 +34,19 @@ public class ThreadGroupHandler {
         for (int i = 0; i <numThreadGroups; i++) {
             new Thread(new MainThread(threadGroupSize, delaySeconds, IPAddr, i + 1, threadGroupLatch, out,map)).start();
             Thread.sleep(delaySeconds * 1000L);
-            totalRequests += 2000;
+            totalRequests += 300;
         }
         threadGroupLatch.await();
         System.out.println("threadGroup all Done");
         long endTime = System.currentTimeMillis();       //  线程组运行完时间
         System.out.println("thread group run all time: " + (endTime - startTime) + " ms");
-        System.out.println("throughput: " + (double) totalRequests / ((endTime - startTime) / 1000.0));
+        System.out.println("throughput: " + (double) totalRequests / ((endTime - startTime)));
         System.out.println("total successful requests: "+map.get("success"));
         System.out.println("total failed requests: "+map.get("fail"));
     }
 
     public static void main(String[] args) throws Exception {
-        ThreadGroupHandler threadGroupHandler = new ThreadGroupHandler(10, 20, 2, "http://alb-1248427116.us-west-2.elb.amazonaws.com/assignment2_war/AlbumStore/albums");
+        ThreadGroupHandler threadGroupHandler = new ThreadGroupHandler(10, 30, 2, "http://34.213.78.62:8080/assignment3_war/AlbumStore/albums");
         threadGroupHandler.request();
     }
 }

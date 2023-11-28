@@ -48,7 +48,7 @@ public class ClientAPI extends Thread{
 //                String result = EntityUtils.toString(entity);
 //                EntityUtils.consume(entity);
             long end = System.currentTimeMillis();
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java5.csv", true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java3.csv", true));
             if (response.getStatusLine().getStatusCode() == 200) {
                 bufferedWriter.append(String.valueOf(start)).append(" Get ").append(String.valueOf(end - start)).append(" ms status:200\n");
                 map.get("success").incrementAndGet();
@@ -98,7 +98,40 @@ public class ClientAPI extends Thread{
             //String result = EntityUtils.toString(entity);
             //EntityUtils.consume(entity);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/result/java5.csv",true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java3.csv",true));
+            if (response.getStatusLine().getStatusCode()==200){
+                bufferedWriter.append(String.valueOf(start)).append(" Post ").append(String.valueOf(end - start)).append(" ms status:200\n");
+                map.get("success").incrementAndGet();
+            }else{
+                bufferedWriter.append(String.valueOf(start)).append(" Post ").append(String.valueOf(end - start)).append(" ms status:"+response.getStatusLine().getStatusCode()+"\n");
+                map.get("fail").incrementAndGet();
+            }
+            bufferedWriter.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void postReview() throws Exception{
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        // Create a MultipartEntityBuilder
+        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+        // This attaches another form field with the file description
+        builder.addTextBody("artist", "yummy");
+        builder.addTextBody("year", "2000");
+        builder.addTextBody("title", "xixi");
+        // Build the multipart entity
+        HttpEntity multipart = builder.build();
+        try {
+            long start = System.currentTimeMillis();
+            HttpPost httpPost = new HttpPost(IPAddr+"/review");
+            // Set the multipart entity as the request entity
+            httpPost.setEntity(multipart);
+
+            CloseableHttpResponse response = httpClient.execute(httpPost);
+            long end = System.currentTimeMillis();
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java3.csv",true));
             if (response.getStatusLine().getStatusCode()==200){
                 bufferedWriter.append(String.valueOf(start)).append(" Post ").append(String.valueOf(end - start)).append(" ms status:200\n");
                 map.get("success").incrementAndGet();
@@ -114,26 +147,27 @@ public class ClientAPI extends Thread{
 
     @Override
     public void run(){
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println("thread group " + threadGroupId + " 中的第 " + threadId + " 个thread "+(i+1)+" 个请求");
             for (int retry = 0; retry < 5; retry++) {
                 try {
                     post();
+                    postReview();
                     break;
                 }catch (Exception e){
                     e.printStackTrace();
                     System.out.println("crowded");
                 }
             }
-            for (int retry = 0; retry < 5; retry++) {
-                try {
-                    get();
-                    break;
-                }catch (Exception e){
-                    e.printStackTrace();
-                    System.out.println("crowded");
-                }
-            }
+//            for (int retry = 0; retry < 5; retry++) {
+//                try {
+//                    get();
+//                    break;
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                    System.out.println("crowded");
+//                }
+//            }
         }
         latch.countDown();
     }

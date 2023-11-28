@@ -43,18 +43,12 @@ public class Main {
         System.out.println("min response time: "+postlist.get(0));
         System.out.println("max response time: "+postlist.get(postlist.size()-1));
         System.out.println("succeed request:"+postlist.size());
-        System.out.println("for get:");
-        System.out.println("mean response time: "+(gres/getlist.size()));
-        System.out.println("median response time: "+getlist.get(getlist.size()/2));
-        System.out.println("99% response time: "+getlist.get(getlist.size()/100));
-        System.out.println("min response time: "+getlist.get(0));
-        System.out.println("max response time: "+getlist.get(getlist.size()-1));
-        System.out.println("succeed request:"+getlist.size());
+
     }
     public static void main(String[] args) throws IOException {
         Main main = new Main();
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java1.csv");
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java2.csv");
-        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/result/java3.csv");
+        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java1.csv");
+        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java2.csv");
+        main.handleData("/Users/youyun/Documents/java project/client2/src/main/resources/assignment3/java3.csv");
     }
 }
